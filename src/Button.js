@@ -4,7 +4,8 @@ import classNames from 'classnames'
 import styled from 'styled-components'
 import { darken } from 'polished'
 import handleRef from './internal/handleRef'
-import defaultTheme from './style/defaultTheme'
+import * as defaultTheme from './style/defaultTheme2'
+import { th } from './utils'
 
 const ButtonComponent = ({ className, size, ...props }) => (
   <button
@@ -21,6 +22,22 @@ const ButtonComponent = ({ className, size, ...props }) => (
 
 const Button = styled(handleRef(ButtonComponent))`
   display: inline-block;
+  font-weight: th('btnFontWeight')
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  user-select: none;
+  border: th('btnBorderWidth') solid transparent;
+  ${props =>
+    props.theme.buttonSize({
+      paddingY: props.theme.btnPaddingY,
+      paddingX: props.theme.btnPaddingX,
+      fontSize: props.theme.fontSizeBase,
+      lineHeight: props.theme.btnLineHeight,
+      borderRadius: props.theme.btnBorderRadius,
+    })};
+  
+
   padding: ${props => props.theme.textControlPadding.sm};
   z-index: ${props => props.theme.zIndexes.control};
   border-radius: ${props => props.theme.borderRadius.md};
