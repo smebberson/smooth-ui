@@ -1,22 +1,14 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */
 import React from 'react'
-import { createPortal } from 'react-dom'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import classNames from 'classnames'
 import Transition from './Transition'
+import Portal from './Portal'
 import * as defaultTheme from './theme/defaultTheme'
 import { th } from './utils'
 
 class ModalComponent extends React.Component {
-  constructor(props) {
-    super(props)
-    if (!this.container && typeof document !== 'undefined') {
-      this.container = document.createElement('div')
-      document.body.appendChild(this.container)
-    }
-  }
-
   handleKeyup = ({ keyCode }) => {
     if (keyCode === 27 /* Escape */) {
       this.props.onClose()
@@ -24,7 +16,6 @@ class ModalComponent extends React.Component {
   }
 
   componentWillUnmount() {
-    document.body.removeChild(this.container)
     document.removeEventListener('keyup', this.handleKeyup)
   }
 
@@ -49,31 +40,32 @@ class ModalComponent extends React.Component {
   render() {
     const { className, theme, opened, onClose, children, ...props } = this.props
     if (!this.container) return null
-    return createPortal(
-      <Transition
-        timeout={theme.modalTransitionDuration}
-        in={this.props.opened}
-      >
-        {transitionState => (
-          <div
-            role="dialog"
-            tabIndex="-1"
-            className={classNames(
-              'sui-modal',
-              {
-                'sui-modal-opened': opened || transitionState === 'exiting',
-                [`sui-modal-transition-${transitionState}`]: transitionState,
-              },
-              className,
-            )}
-            {...props}
-          >
-            <div className="sui-modal-backdrop" onClick={onClose} />
-            {children}
-          </div>
-        )}
-      </Transition>,
-      this.container,
+    return (
+      <Portal>
+        <Transition
+          timeout={theme.modalTransitionDuration}
+          in={this.props.opened}
+        >
+          {transitionState => (
+            <div
+              role="dialog"
+              tabIndex="-1"
+              className={classNames(
+                'sui-modal',
+                {
+                  'sui-modal-opened': opened || transitionState === 'exiting',
+                  [`sui-modal-transition-${transitionState}`]: transitionState,
+                },
+                className,
+              )}
+              {...props}
+            >
+              <div className="sui-modal-backdrop" onClick={onClose} />
+              {children}
+            </div>
+          )}
+        </Transition>,
+      </Portal>
     )
   }
 }
