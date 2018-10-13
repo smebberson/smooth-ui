@@ -178,7 +178,7 @@ export const btnDisabledOpacity = 0.8
 // Labels
 
 export const labelColor = 'inherit';
-expott const labelMarginBottom: '.5rem';
+export const labelMarginBottom: '.5rem';
 
 // Inputs
 
