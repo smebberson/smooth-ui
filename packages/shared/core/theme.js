@@ -175,6 +175,11 @@ export const btnLineHeightLg = th('inputBtnLineHeightLg')
 export const btnBorderWidth = 0
 export const btnDisabledOpacity = 0.8
 
+// Labels
+
+export const labelColor = 'inherit';
+expott const labelMarginBottom: '.5rem';
+
 // Inputs
 
 export const inputPaddingY = th('inputBtnPaddingY')
