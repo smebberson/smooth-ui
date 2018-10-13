@@ -7,8 +7,9 @@ const Label = createComponent(() => ({
   name: 'label',
   defaultComponent: 'label',
   style: css`
+    color: ${th('alertColor')};
     display: inline-block;
-    margin-bottom: 0.5rem;
+    margin-bottom: ${th('alertMarginBottom')};
   `,
   propTypes: {
     children: PropTypes.node,
